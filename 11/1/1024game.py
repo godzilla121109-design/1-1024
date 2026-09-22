@@ -12,10 +12,10 @@ def play_game():
     """1回分のゲーム処理"""
     clear_screen()
     print("=" * 50)
-    print(" 🎲 1/1024 の奇跡に挑む！10連続当てゲーム 🎲")
+    print("1/1024 を当てろ！！")
     print("=" * 50)
     print("毎回『1』か『2』を選んで入力してください。")
-    print("10回連続で正解できればクリアです！（確率: 1/1024）\n")
+    print("10回連続で正解してみてね！（確率: 1/1024）\n")
 
     current_stage = 1
     max_stage = 10
@@ -41,7 +41,7 @@ def play_game():
         # 入力チェック（1 か 2 以外が入力された場合）
         if user_input not in ["1", "2"]:
             print(
-                "⚠️ 入力が正しくありません。『1』か『2』を入力してください。\n"
+                "!ERROR! 入力が正しくありません。『1』か『2』を入力してください。\n"
             )
             continue  # 間違えた入力のときはゲームオーバーにせず、もう一度入力を促す
 
@@ -49,12 +49,12 @@ def play_game():
 
         # 判定
         if player_choice == correct_answer:
-            print(f"⭕️ 正解！ (正解は {correct_answer} でした)\n")
+            print(f"正解！ (正解は {correct_answer} でした)\n")
             current_stage += 1
         else:
-            print(f"❌ 残念... 不正解！ (正解は {correct_answer} でした)")
+            print(f"残念... 不正解！ (正解は {correct_answer} でした)")
             print(
-                f"\n💥 ゲームオーバー！ あなたは【Stage {current_stage}】まで到達しました。"
+                f"\nゲームオーバー！ あなたは【Stage {current_stage}】まで到達しました。"
             )
             break
 
@@ -62,7 +62,7 @@ def play_game():
     if current_stage > max_stage:
         print("\n" + "🎉" * 20)
         print(" Congratulations!!")
-        print(" 1/1024 の超強運で見事 10回連続正解 しました！")
+        print("おめでとうございます！ 1/1024 の超強運で見事 10回連続正解 しました！")
         print("🎉" * 20)
 
     # 再挑戦の確認
