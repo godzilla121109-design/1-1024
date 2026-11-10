@@ -15,6 +15,10 @@ pygame.display.set_caption("My Pygame App")
 # 3. フレームレート（FPS）を管理するためのクロックオブジェクト
 clock = pygame.time.Clock()
 
+# キャラクターの初期座標
+x = 400
+y = 300
+
 # 4. メインループ
 while True:
     # イベント処理 (キー入力やウィンドウの×ボタンなど)
@@ -23,26 +27,28 @@ while True:
             pygame.quit()
             sys.exit()
 
-    # 画面の背景色を塗りつぶす (RGB: ここでは白)
+    # キーボード入力の検知と座標の移動
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        x -= 5
+    if keys[pygame.K_RIGHT]:
+        x += 5
+    if keys[pygame.K_UP]:
+        y -= 5
+    if keys[pygame.K_DOWN]:
+        y += 5
+
+    # 画面の背景色を塗りつぶす (RGB: 白)
     screen.fill((255, 255, 255))
 
-    # 赤い四角形を描く (surface, 色(R,G,B), 矩形(x, y, 幅, 高さ))
-pygame.draw.rect(screen, (255, 0, 0), (100, 100, 50, 50))
+    # 赤い四角形を描く
+    pygame.draw.rect(screen, (255, 0, 0), (100, 100, 50, 50))
 
-# 青い円を描く (surface, 色(R,G,B), 中心座標(x, y), 半径)
-pygame.draw.circle(screen, (0, 0, 255), (400, 300), 30)
-# メインループ内
-keys = pygame.key.get_pressed()
-if keys[pygame.K_LEFT]:
-    print("左キーが押されています")
-if keys[pygame.K_RIGHT]:
-    print("右キーが押されています")
-# 画像の読み込み (ループの外で1回だけ読み込むのが一般的)
-player_image = pygame.image.load("player.png").convert()
+    # 青い円を描く
+    pygame.draw.circle(screen, (0, 0, 255), (400, 300), 30)
 
-# 描画時 (ループ内)
-screen.blit(player_image, (x, y))
-# --- ここに描画やゲームの処理を書く ---
+    # 画面中央に動かせる四角形を描く（移動確認用）
+    pygame.draw.rect(screen, (0, 255, 0), (x, y, 40, 40))
 
     # 画面を更新
     pygame.display.flip()
