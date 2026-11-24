@@ -17,7 +17,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Pygame Rect Example")
 
 # 四角形の色とサイズ・位置の定義（スペルを統一）
-rect_color = (150, 30, 60)
+rect_color = (255, 255, 255)
 rect_dimensions = (35, 65, 30, 30)  # (X座標, Y座標, 幅, 高さ)
 
 # メインループ
