@@ -19,11 +19,17 @@ clock = pygame.time.Clock()
 
 # 四角形の色・サイズ・位置・速度の定義
 rect_color = (255, 255, 255)
-x = 35
-y = 65
+x = 200
+y = 200
 width = 30
 height = 30
 speed = 5
+
+rect_color = (255, 0, 0)
+drangonx = 40
+dragony = 200
+dragonwidth = 100
+dragonheight = 75
 
 # メインループ
 while True:
