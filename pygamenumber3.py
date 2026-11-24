@@ -2,7 +2,7 @@ import pygame
 import sys
 import random
 
-# Pygameの初期化（括弧が必要）
+# Pygameの初期化
 pygame.init()
 
 # 画面とグリッドの設定
@@ -14,11 +14,16 @@ SCREEN_HEIGHT = CELL_SIZE * GRID_HEIGHT
 
 # ウィンドウ（screen）の作成
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Pygame Rect Example")
+pygame.display.set_caption("コイン獲得ゲーム")
+clock = pygame.time.Clock()
 
-# 四角形の色とサイズ・位置の定義（スペルを統一）
+# 四角形の色・サイズ・位置・速度の定義
 rect_color = (255, 255, 255)
-rect_dimensions = (35, 65, 30, 30)  # (X座標, Y座標, 幅, 高さ)
+x = 35
+y = 65
+width = 30
+height = 30
+speed = 5
 
 # メインループ
 while True:
@@ -28,12 +33,26 @@ while True:
             pygame.quit()
             sys.exit()
 
+    # キー入力の処理
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        x -= speed
+    if keys[pygame.K_RIGHT]:
+        x += speed
+    if keys[pygame.K_UP]:
+        y -= speed
+    if keys[pygame.K_DOWN]:
+        y += speed
+
     # 背景を黒で塗りつぶす
     screen.fill((0, 0, 0))
 
-    # 四角形を描画する
+    # 更新された座標 (x, y) を使って四角形を描画する
+    rect_dimensions = (x, y, width, height)
     pygame.draw.rect(screen, rect_color, rect_dimensions)
 
     # 画面を更新して描画を反映する
     pygame.display.flip()
 
+    # フレームレートを60FPSに固定（これがないと移動が速すぎます）
+    clock.tick(60)
