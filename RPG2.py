@@ -47,8 +47,6 @@ class Player:
         self.current_hp = 100
         self.weapon_index = 0
 
-    need_money = 99999999 - self.money
-
     @property
     def current_weapon(self):
         return WEAPON_SHOP[self.weapon_index]
@@ -80,8 +78,9 @@ class Player:
                 self.money = int(data[0])
                 if len(data) > 1:
                     self.weapon_index = int(data[1])
+                need_money = max(0, self.target_money - self.money)
                 print(
-                    f"📂 ロードしました！（所持金: {self.money:,}円 / 装備: {self.current_weapon['name']}）99999999円まで" + need_money + "円"
+                    f"📂 ロードしました！（所持金: {self.money:,}円 / 装備: {self.current_weapon['name']}）99,999,999円まであと {need_money:,} 円"
                 )
             except Exception as e:
                 print(f"⚠️ ロード失敗のため初期化します: {e}")
@@ -237,6 +236,7 @@ def main():
     while True:
         max_hp = player.get_max_hp()
         step = player.get_money_bonus_step()
+
         print("\n【現在のステータス】")
         print(f"・所持金: {player.money:,} 円")
         print(f"・最大HP: {max_hp} / 2,000(上限)")
@@ -250,7 +250,6 @@ def main():
             print("・ドラゴン出現フラグ: 🐉【解放済み】")
         else:
             print("・ドラゴン出現フラグ: 🔒 (所持金10万円以上で開放)")
-
         print("-" * 30)
         print("1: 冒険に出かける（バトル）")
         print("2: 商店（武器屋）に行く")
