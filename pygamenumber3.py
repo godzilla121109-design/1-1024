@@ -11,11 +11,12 @@ GRID_HEIGHT = 35
 CELL_SIZE = 20
 SCREEN_WIDTH = CELL_SIZE * GRID_WIDTH
 SCREEN_HEIGHT = CELL_SIZE * GRID_HEIGHT
+
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("コイン獲得ゲーム")
 clock = pygame.time.Clock()
 
-# フォントの設定（ループの外で1回だけ作成する）
+# フォントはループの外で1回だけ作成する
 font = pygame.font.Font(None, 36)
 
 # プレイヤー（白い四角形）の設定
@@ -35,12 +36,12 @@ dragon_height = 75
 dragon_speed = 3
 
 # 炎（火の玉）の設定
-fire_color = (255, 100, 0)  # オレンジ色
+fire_color = (255, 100, 0)
 fire_width = 25
 fire_height = 15
 fire_speed = 7
-fires = []  # 発射された炎を管理するリスト
-fire_timer = 0  # 2秒を測るためのタイマー
+fires = []
+fire_timer = 0
 
 # コイン（黄色の四角形）の設定
 coin_color = (255, 215, 0)
@@ -108,10 +109,11 @@ while True:
         pygame.quit()
         sys.exit()
 
-    # 1. まず背景を黒で塗りつぶす
+    # --- ここから描画処理 ---
+    # 背景を黒で塗りつぶす
     screen.fill((0, 0, 0))
 
-    # 2. 各オブジェクトを描画
+    # 各オブジェクトの描画
     pygame.draw.rect(screen, player_color, player_rect)
     pygame.draw.rect(screen, dragon_color, dragon_rect)
     pygame.draw.rect(screen, coin_color, coin_rect)
@@ -119,9 +121,9 @@ while True:
     for fire in fires:
         pygame.draw.rect(screen, fire_color, fire)
 
-    # 3. 最後にスコアを描画する（一番手前に表示される）
+    # 背景を塗ったあとにスコアを描画する
     text_surface = font.render(f"Your score is: {score}", True, (255, 255, 255))
-    screen.blit(text_surface, (20, 20))  # 左上に表示するように座標を調整
+    screen.blit(text_surface, (10, 10))
 
     # 画面を更新
     pygame.display.flip()
