@@ -3,10 +3,8 @@ import random
 
 SAVE_FILE = "save_data.txt"
 
-
 # ==================== 敵クラス ====================
 class Enemy:
-
     def __init__(self, name, base_hp, attack, base_reward, money_bonus_step):
         # 所持金10万円ごとに HP+10, 報酬+100（下限はベース値）
         bonus_hp = money_bonus_step * 10
@@ -40,7 +38,6 @@ WEAPON_SHOP = [
 
 # ==================== プレイヤークラス ====================
 class Player:
-
     def __init__(self):
         self.money = 0
         self.target_money = 99999999
@@ -80,7 +77,7 @@ class Player:
                     self.weapon_index = int(data[1])
                 need_money = max(0, self.target_money - self.money)
                 print(
-                    f"📂 ロードしました！（所持金: {self.money:,}円 / 装備: {self.current_weapon['name']}）99,999,999円まであと {need_money:,} 円"
+                    f"📂 ロードしました！（所持金: {self.money:,}円 / 装備: {self.current_weapon['name']}）目標まであと {need_money:,} 円"
                 )
             except Exception as e:
                 print(f"⚠️ ロード失敗のため初期化します: {e}")
@@ -120,9 +117,7 @@ def shop(player):
                 else:
                     player.money -= target_weapon["price"]
                     player.weapon_index = idx
-                    print(
-                        f"✨ {target_weapon['name']} を購入して装備しました！"
-                    )
+                    print(f"✨ {target_weapon['name']} を購入して装備しました！")
                     player.save_game()
             else:
                 print("＞ 無効な番号です。")
@@ -148,9 +143,7 @@ def start_battle(player):
 
     print("\n" + "=" * 50)
     if enemy.name == "Dragon":
-        print(
-            "🐉 警告！ 超強力ボス 【Dragon】 が姿を現した！（通常攻撃力: 200）"
-        )
+        print("🐉 警告！ 超強力ボス 【Dragon】 が姿を現した！（通常攻撃力: 200）")
     else:
         print(f"あらわれる！ {enemy.name}")
     print(f"HP: {enemy.hp} / 通常攻撃力: {enemy.attack}")
@@ -173,8 +166,8 @@ def start_battle(player):
 
         choice = input("行動を選択してください (1 or 2): ").strip()
         enemy_action = random.choice(["attack", "roar"])
-
         print("\n【戦闘結果】")
+
         if choice == "1":
             if enemy_action == "attack":
                 print(
@@ -183,20 +176,14 @@ def start_battle(player):
                 print(f"＞ プレイヤーは {enemy.attack} のダメージを受けた！")
                 player.current_hp -= enemy.attack
             else:
-                print(
-                    f"＞ {enemy.name} は吠えたてている！ その隙を突いて攻撃！"
-                )
-                print(
-                    f"＞ {enemy.name} に {weapon['atk']} のダメージを与えた！"
-                )
+                print(f"＞ {enemy.name} は吠えたてている！ その隙を突いて攻撃！")
+                print(f"＞ {enemy.name} に {weapon['atk']} のダメージを与えた！")
                 enemy.hp -= weapon["atk"]
         elif choice == "2":
             if enemy_action == "attack":
                 print(f"＞ {enemy.name} の通常攻撃！ 盾で完全に防ぎきった！")
             else:
-                print(
-                    f"＞ {enemy.name} が激しく吠えたてた！ 10 のダメージを受けた！"
-                )
+                print(f"＞ {enemy.name} が激しく吠えたてた！ 10 のダメージを受けた！")
                 player.current_hp -= 10
         else:
             print("＞ まごまごしているうちに攻撃を受けた！")
@@ -236,7 +223,6 @@ def main():
     while True:
         max_hp = player.get_max_hp()
         step = player.get_money_bonus_step()
-
         print("\n【現在のステータス】")
         print(f"・所持金: {player.money:,} 円")
         print(f"・最大HP: {max_hp} / 2,000(上限)")
