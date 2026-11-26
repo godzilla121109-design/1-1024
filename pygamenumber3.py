@@ -11,12 +11,11 @@ GRID_HEIGHT = 35
 CELL_SIZE = 20
 SCREEN_WIDTH = CELL_SIZE * GRID_WIDTH
 SCREEN_HEIGHT = CELL_SIZE * GRID_HEIGHT
-
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("コイン獲得ゲーム")
 clock = pygame.time.Clock()
 
-# フォントはループの外で1回だけ作成する
+# ★修正：フォントオブジェクトはループの外で1回だけ作成する
 font = pygame.font.Font(None, 36)
 
 # プレイヤー（白い四角形）の設定
@@ -36,12 +35,12 @@ dragon_height = 75
 dragon_speed = 3
 
 # 炎（火の玉）の設定
-fire_color = (255, 100, 0)
+fire_color = (255, 100, 0)  # オレンジ色
 fire_width = 25
 fire_height = 15
 fire_speed = 7
-fires = []
-fire_timer = 0
+fires = []      # 発射された炎を管理するリスト
+fire_timer = 0  # 2秒を測るためのタイマー
 
 # コイン（黄色の四角形）の設定
 coin_color = (255, 215, 0)
@@ -76,10 +75,11 @@ while True:
     # 2秒おきに炎を発射する処理（60FPS × 2秒 = 120フレーム）
     fire_timer += 1
     if fire_timer >= 120:
+        # ドラゴンの右端・縦の中央から炎を出現させる
         start_x = dragon_x + dragon_width
         start_y = dragon_y + (dragon_height // 2) - (fire_height // 2)
         fires.append(pygame.Rect(start_x, start_y, fire_width, fire_height))
-        fire_timer = 0
+        fire_timer = 0  # タイマーをリセット
 
     # 描画用のRectオブジェクトを作成
     player_rect = pygame.Rect(player_x, player_y, player_width, player_height)
@@ -87,12 +87,14 @@ while True:
     coin_rect = pygame.Rect(coin_x, coin_y, coin_size, coin_size)
 
     # 炎の移動と当たり判定
-    for fire in fires[:]:
+    for fire in fires[:]:  # リストのコピーを使ってループを回す
         fire.x += fire_speed
+        # プレイヤーに炎が当たったらゲームオーバー
         if player_rect.colliderect(fire):
             print("炎に当たった！ゲームオーバー")
             pygame.quit()
             sys.exit()
+        # 画面の右端から出たらリストから削除（メモリ節約）
         if fire.x > SCREEN_WIDTH:
             fires.remove(fire)
 
@@ -110,21 +112,22 @@ while True:
         sys.exit()
 
     # --- ここから描画処理 ---
-    # 背景を黒で塗りつぶす
+    # 1. まず背景を黒で塗りつぶす
     screen.fill((0, 0, 0))
 
-    # 各オブジェクトの描画
+    # 2. 各オブジェクトの描画
     pygame.draw.rect(screen, player_color, player_rect)
     pygame.draw.rect(screen, dragon_color, dragon_rect)
     pygame.draw.rect(screen, coin_color, coin_rect)
 
+    # すべての炎を描画
     for fire in fires:
         pygame.draw.rect(screen, fire_color, fire)
 
-    # 背景を塗ったあとにスコアを描画する
+    # ★修正：3. スコアテキストの描画（f-stringを使い、背景塗りつぶしの後に描画する）
     text_surface = font.render(f"Your score is: {score}", True, (255, 255, 255))
-    screen.blit(text_surface, (10, 10))
+    screen.blit(text_surface, (20, 20))  # 左上に表示（元の(100, 150)でも可）
 
-    # 画面を更新
+    # 4. 画面を更新
     pygame.display.flip()
     clock.tick(60)
