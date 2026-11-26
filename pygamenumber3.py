@@ -16,6 +16,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("コイン獲得ゲーム")
 clock = pygame.time.Clock()
 
+
 # プレイヤー（白い四角形）の設定
 player_color = (255, 255, 255)
 player_x = 200
@@ -54,7 +55,14 @@ while True:
             pygame.quit()
             sys.exit()
 
-    # プレイヤーのキー入力処理
+    # 1. Create a font object and render the text into a surface
+font = pygame.font.Font(None, 36)  # None uses default font, 36 is size
+text_surface = font.render("Your score is:" + score, True, (255, 255, 255))
+
+# 2. Draw (blit) the text surface onto your screen at coordinates (x, y)
+screen.blit(text_surface, (100, 150))
+
+# プレイヤーのキー入力処理
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT] and player_x > 0:
         player_x -= speed
