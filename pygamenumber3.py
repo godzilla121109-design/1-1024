@@ -45,7 +45,6 @@ coin_color = (255, 215, 0)
 coin_size = 20
 coin_x = random.randint(0, SCREEN_WIDTH - coin_size)
 coin_y = random.randint(0, SCREEN_HEIGHT - coin_size)
-
 score = 0
 
 # メインループ
@@ -88,11 +87,13 @@ while True:
     # ★追加：炎の移動と当たり判定
     for fire in fires[:]:  # リストのコピーを使ってループを回す
         fire.x += fire_speed
+
         # プレイヤーに炎が当たったらゲームオーバー
         if player_rect.colliderect(fire):
             print("炎に当たった！ゲームオーバー")
             pygame.quit()
             sys.exit()
+
         # 画面の右端から出たらリストから削除（メモリ節約）
         if fire.x > SCREEN_WIDTH:
             fires.remove(fire)
@@ -125,4 +126,3 @@ while True:
     # 画面を更新
     pygame.display.flip()
     clock.tick(60)
-
