@@ -47,6 +47,8 @@ class Player:
         self.current_hp = 100
         self.weapon_index = 0
 
+    need_money = 99999999 - self.money
+
     @property
     def current_weapon(self):
         return WEAPON_SHOP[self.weapon_index]
@@ -79,7 +81,7 @@ class Player:
                 if len(data) > 1:
                     self.weapon_index = int(data[1])
                 print(
-                    f"📂 ロードしました！（所持金: {self.money:,}円 / 装備: {self.current_weapon['name']}）"
+                    f"📂 ロードしました！（所持金: {self.money:,}円 / 装備: {self.current_weapon['name']}）99999999円まで" + need_money + "円"
                 )
             except Exception as e:
                 print(f"⚠️ ロード失敗のため初期化します: {e}")
